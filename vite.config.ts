@@ -4,19 +4,21 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
-    // 自动兼容两种名字
     const apiKey = env.GOOGLE_API_KEY || env.GEMINI_API_KEY;
 
     return {
       server: {
-        // 👇👇👇 核心修改：强制使用 8080 端口，或者读取系统环境变量 PORT
+        // 端口配置
         port: Number(process.env.PORT) || 8080,
         host: '0.0.0.0',
-        allowedHosts: true,
+        // 👇👇👇 核心修改：填入具体的 Cloud Run 域名
+        allowedHosts: [
+            'zhaopin-428554502382.asia-northeast1.run.app',
+            'localhost' 
+        ],
       },
       plugins: [react()],
       define: {
-        // 注入密钥
         'process.env.API_KEY': JSON.stringify(apiKey),
         'process.env.GEMINI_API_KEY': JSON.stringify(apiKey),
         'process.env.GOOGLE_API_KEY': JSON.stringify(apiKey)
