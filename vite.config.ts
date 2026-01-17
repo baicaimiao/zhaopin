@@ -12,9 +12,10 @@ export default defineConfig(({ mode }) => {
         port: Number(process.env.PORT) || 8080,
         host: '0.0.0.0',
         
-        // 2. 【核心修复】这里必须是“数组”，绝对不能是 true ！
+        // 2. 【核心修复】白名单里只能填“精准的完整域名”
         allowedHosts: [
-            '.run.app',  // 允许所有 Cloud Run 域名
+            // 请务必确认下面这个地址和你 Cloud Run 顶部显示的 URL 完全一致（不要带 https://）
+            'zhaopin-428554502382.asia-northeast1.run.app', 
             'localhost'
         ],
       },
