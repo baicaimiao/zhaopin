@@ -8,13 +8,15 @@ export default defineConfig(({ mode }) => {
 
     return {
       server: {
-        // 端口配置
+        // 1. 【核心修复】强制使用 8080 端口 (解决 Container failed to start)
         port: Number(process.env.PORT) || 8080,
         host: '0.0.0.0',
-        // 👇👇👇 核心修改：填入具体的 Cloud Run 域名
+        
+        // 2. 【核心修复】Vite 6 必须用数组格式的白名单 (解决 Host blocked)
         allowedHosts: [
-            'zhaopin-428554502382.asia-northeast1.run.app',
-            'localhost' 
+            // 允许所有 .run.app 后缀的域名（偷懒但有效的写法）
+            '.run.app', 
+            'localhost'
         ],
       },
       plugins: [react()],
